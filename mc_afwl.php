@@ -34,8 +34,8 @@ public function __construct()
 	
 	// INITIALIZE VARIABLES
 	global $wpdb;
-	$this->s_table_name = $wpdb->prefix . "mc_afwl";
-	$this->s_cookie_name = "mc_afwl";
+	$this->s_table_name = $wpdb->prefix . "mc_afwl_wishlist";
+	$this->s_cookie_name = "mc_afwl_watches_wishlist";
 	
 	$this->a_default_texts = array(
 		'add' => 'Add to favourites',
@@ -280,17 +280,15 @@ private function is_added_in_db( $i_item_id )
 
 private function add_to_cookie( $i_item_id )
 {
-	// GET COOKIE NAME
-	$s_cookie_name = $this->get_cookie_name( $s_table );
 		
 	// GET THE UNIX TIMESTAMP OF ONE WEEK FROM NOW
 	$i_next_week = time()+60*60*24*7; 
 	
 	// GET CURRENT COOKIE SIZE
-	$i_cookie_size = count( $_COOKIE[$s_cookie_name] );
+	$i_cookie_size = count( $_COOKIE[$this->s_cookie_name] );
 	
 	// SET A NEW COOKIE
-	setcookie( $s_cookie_name.'['.$i_cookie_size.']', $i_item_id, $i_next_week, '/' );
+	setcookie( $this->s_cookie_name.'['.$i_cookie_size.']', $i_item_id, $i_next_week, '/' );
 }
 
 
